@@ -1,0 +1,19 @@
+﻿@model NEWS_TASK.Models.Database.Newsdata
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+<form action="/NEWS/Insert" method="post">
+    <input type="hidden" name="Id" value="@Model.Id"/>
+    <input type="text" name="Title" value="@Model.Title" class="form-control" placeholder="TITLE" />
+    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+    <input type="text" name="Description" value="@Model.Description" class="form-control" placeholder="DESCRIPTION" />
+    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    <input type="text" name="Catagory" value="@Model.Category" class="form-control" placeholder="CATEGORY" />
+    @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+    <input type="date" name="PublishDate" value="@Model.PublishDate" class="form-control" placeholder="PUBLISHDATE" />
+    @Html.ValidationMessageFor(model => model.PublishDate, "", new { @class = "text-danger" })
+    <input type="submit" value="update" />
+</form>
+

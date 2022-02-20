@@ -1,0 +1,33 @@
+﻿@model List<PRODUCT_CRUD.Models.Database.Product>
+@{
+    ViewBag.Title = "Index";
+
+}
+<h2>ALL PRODUCTS DETAILS</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>PRICE</th>
+        <th>TYPE</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+    </tr>
+    @foreach(var a in Model)
+            {
+        <tr>
+            <td>@a.Id</td>
+            <td>@a.Name</td>
+            <td>@a.Price</td>
+            <td>@a.Type</td>
+            <td>@a.Quantity</td>
+
+            <td><a href="/ECOM/Edit/@a.Id"  class="btn btn-primary">EDIT</a></td>
+            <td><a href="/ECOM/Delete/@a.Id"  class="btn btn-danger">DELETE</a></td>
+        </tr>
+
+            }
+
+</table>
+

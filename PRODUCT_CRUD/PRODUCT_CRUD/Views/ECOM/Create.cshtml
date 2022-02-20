@@ -1,0 +1,28 @@
+﻿@model PRODUCT_CRUD.Models.Database.Product
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Inserting into the Databse</h2>
+
+<form action="/ECOM/Create" method="post">
+
+
+    <input type="text" name="Name" value="@Model.Name" class="form-control" placeholder="Product Name" /><br />
+    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+    <input type="text" name="Price" value="@Model.Price" class="form-control" placeholder="Price" /><br />
+    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+
+    <input type="text" name="Type" value="@Model.Type" class="form-control" placeholder="Type" /><br />
+    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+
+    <input type="number" name="Quantity" value="@Model.Quantity" class="form-control" placeholder="Quantity " /><br />
+    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+    <input type="submit" value="Insert" class="btn btn-primary" />
+
+
+</form>
+
+
+

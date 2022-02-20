@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="NEWSDBMODEL.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'NEWSDB.dbo.News' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="News">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="Title" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="Description" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="Category" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="PublishDate" Nullable="false" Type="date" />
+  </EntityType>
+  <EntityContainer Name="NEWSDBMODELStoreContainer">
+    <EntitySet Name="News" EntityType="Self.News" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[News].[Id] AS [Id], 
+[News].[Title] AS [Title], 
+[News].[Description] AS [Description], 
+[News].[Category] AS [Category], 
+[News].[PublishDate] AS [PublishDate]
+FROM [dbo].[News] AS [News]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>
