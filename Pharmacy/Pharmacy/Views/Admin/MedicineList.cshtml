@@ -1,0 +1,103 @@
+﻿@model IEnumerable<Pharmacy.Models.Database.Medicine>
+
+@{
+    ViewBag.Title = "MedicineList";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2 class="py-2">Medicine List</h2>
+<hr />
+
+<p class="d-flex justify-content-start">
+    <a href="/Admin/MedicineAdd" class="btn btn-sm btn-primary">Add new</a>
+</p>
+<table class="table w-50">
+    <tr class="alert-success">
+        <th>Name</th>
+        <th>Max Rate</th>
+        <th>Stock</th>
+        <th>#</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.name + item.generic)*@
+                <b>@item.name</b> <span class="text-lowercase">@item.generic </span>
+            </td>
+            <td>
+               @Html.DisplayFor(modelItem => item.rate) BDT
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantity)
+            </td>
+            <td>
+                <button class="btn btn-outline-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#@item.name.Replace(" ", "")@item.generic" aria-controls="offcanvasExample">
+                    Details <i class="fas fa-caret-right"></i>
+                </button>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@foreach (var data in Model)
+{
+    <div class="offcanvas offcanvas-end w-50" tabindex="-1" id="@data.name.Replace(" ", "")@data.generic" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel"><b>@data.name</b> @data.generic </h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+
+            <table class="table">
+                <tr class="alert-danger">
+                    <th>Supplier</th>
+                    <th>Category</th>
+                    <th>Rate</th>
+                    <th>Stock</th>
+                    <th>Expired on</th>
+                    <th>#Action</th>
+                </tr>
+
+                @foreach (var item in (IEnumerable<Pharmacy.Models.Database.Medicine>)ViewData[@data.name + @data.generic])
+                {
+                    <tr>
+                        <td>
+                            @item.Supplier.name
+                        </td>
+                        <td>
+                            @item.Category.name
+                        </td>
+                        <td>
+                            @item.rate BDT
+                        </td>
+                        <td>
+                            @item.quantity
+                        </td>
+                        <td>
+                            @item.expired_date
+                        </td>
+                        <td>
+                            @Html.ActionLink(" ", "MedicineEdit", new { id = item.id }, new { @class = "fa-solid fa-pen-to-square text-warning" }) |
+                            @*<a href="#" class="text-decoration-none">
+                                    <i class="fa-solid fa-pen-to-square text-warning"></i>
+                                </a>*@
+
+                            @*<a href="/Admin/MedicineDelete/id?@item.id" class="text-decoration-none">
+                                    <i class="fa-solid fa-trash text-danger"></i>
+                                </a>*@
+                            @Html.ActionLink(" ", "MedicineDelete", new { id = item.id }, new { @class = "fa-solid fa-trash text-danger" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+
+        </div>
+    </div>
+
+}

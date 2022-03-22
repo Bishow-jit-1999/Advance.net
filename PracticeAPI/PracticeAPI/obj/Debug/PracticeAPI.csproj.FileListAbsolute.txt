@@ -1,0 +1,2 @@
+F:\Advace C# task\PracticeAPI\PracticeAPI\obj\Debug\PracticeAPI.csproj.AssemblyReference.cache
+F:\Advace C# task\PracticeAPI\PracticeAPI\obj\Debug\PracticeAPI.csproj.CoreCompileInputs.cache

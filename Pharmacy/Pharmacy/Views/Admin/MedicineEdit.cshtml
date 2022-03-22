@@ -1,0 +1,116 @@
+﻿@model Pharmacy.Models.Database.Medicine
+
+@{
+    ViewBag.Title = "Medicine Update";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2 class="mt-2">Medicine Update</h2>
+
+<form action="/Admin/MedicineEdit" method="post">
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.rate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.rate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.rate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.generic, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.generic, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.generic, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.supplier_id, "supplier_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("supplier_id", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.supplier_id, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        <div>
+            <label for="supplier_id" class="control-label col-md-2">Supplier</label>
+            <div class="col-md-10">
+                <select name="supplier_id" id="supplier_id" class="form-control">
+                    <option disabled selected>Select supplier</option>
+                    @foreach (var sup in ViewBag.suppliers)
+                    {
+                        <option value="@sup.id" selected="@sup.id==@Model.supplier_id">@sup.name</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.quantity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.quantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.expired_date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.expired_date, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control" } })
+                @*<input type="date" name="expired_date" class="form-control" value="@Model .expired_date" />*@
+                @Html.ValidationMessageFor(model => model.expired_date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.category_id, "category_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("category_id", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        <div>
+            <label for="category_id" class="control-label col-md-2">Category</label>
+            <div class="col-md-10">
+                @*<select name="category_id" id="category_id" class="form-control">
+                        <option disabled value="#" selected>Select category</option>
+                        @foreach (var cat in ViewBag.category)
+                        {
+                            <option value="@cat.id" selected="@cat.id===Model.category_id">@cat.name</option>
+                        }
+                    </select>*@
+                <input list="browsers" name="category_id" value="@Model.category_id" class="form-control">
+                <datalist id="browsers">
+                    @foreach (var cat in ViewBag.category)
+                    {
+                        <option value="@cat.id">@cat.name</option>
+                    }
+                </datalist>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-primary col-2 mt-2" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="d-flex justify-content-end">
+    @Html.ActionLink("Back to List", "MedicineList")
+</div>

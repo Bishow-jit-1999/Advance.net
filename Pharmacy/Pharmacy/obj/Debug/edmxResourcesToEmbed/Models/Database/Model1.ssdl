@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="PharmaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="name" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="desc" MaxLength="199" Type="varchar" />
+  </EntityType>
+  <EntityType Name="Medicines">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="name" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="rate" Nullable="false" Type="int" />
+    <Property Name="generic" MaxLength="50" Type="varchar" />
+    <Property Name="supplier_id" Type="int" />
+    <Property Name="quantity" Nullable="false" Type="int" />
+    <Property Name="expired_date" Type="date" />
+    <Property Name="category_id" MaxLength="50" Type="varchar" />
+  </EntityType>
+  <EntityType Name="Order_details">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="order_id" Nullable="false" Type="int" />
+    <Property Name="quantity" Nullable="false" Type="int" />
+    <Property Name="price" Nullable="false" Type="int" />
+    <Property Name="medicine_id" Nullable="false" Type="int" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="status" MaxLength="20" Type="varchar" />
+    <Property Name="total_amount" Nullable="false" Type="int" />
+    <Property Name="discount" Type="int" />
+    <Property Name="user_id" Nullable="false" Type="int" />
+    <Property Name="created_at" Type="datetime" />
+    <Property Name="updated_at" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Suppliers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="name" Nullable="false" MaxLength="50" Type="varchar" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="name" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="role" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="email" MaxLength="30" Type="varchar" />
+    <Property Name="password" Nullable="false" MaxLength="200" Type="varchar" />
+    <Property Name="phone" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="address" MaxLength="100" Type="varchar" />
+    <Property Name="is_active" MaxLength="4" Type="binary" />
+    <Property Name="created_at" Type="datetime" />
+    <Property Name="updated_at" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_Medicines_Category">
+    <End Type="Self.Category" Multiplicity="1" Role="Category" />
+    <End Type="Self.Medicines" Multiplicity="0..1" Role="Medicines" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Medicines">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Medicines_Suppliers">
+    <End Type="Self.Suppliers" Multiplicity="1" Role="Suppliers" />
+    <End Type="Self.Medicines" Multiplicity="0..1" Role="Medicines" />
+    <ReferentialConstraint>
+      <Principal Role="Suppliers">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Medicines">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_details_Medicines">
+    <End Type="Self.Medicines" Multiplicity="1" Role="Medicines" />
+    <End Type="Self.Order_details" Multiplicity="0..1" Role="Order_details" />
+    <ReferentialConstraint>
+      <Principal Role="Medicines">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Order_details">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_details_Orders">
+    <End Type="Self.Orders" Multiplicity="1" Role="Orders" />
+    <End Type="Self.Order_details" Multiplicity="0..1" Role="Order_details" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Order_details">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Users">
+    <End Type="Self.Users" Multiplicity="1" Role="Users" />
+    <End Type="Self.Orders" Multiplicity="0..1" Role="Orders" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PharmaModelStoreContainer">
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Medicines" EntityType="Self.Medicines" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order_details" EntityType="Self.Order_details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Medicines_Category" Association="Self.FK_Medicines_Category">
+      <End EntitySet="Category" Role="Category" />
+      <End EntitySet="Medicines" Role="Medicines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Medicines_Suppliers" Association="Self.FK_Medicines_Suppliers">
+      <End EntitySet="Suppliers" Role="Suppliers" />
+      <End EntitySet="Medicines" Role="Medicines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_details_Medicines" Association="Self.FK_Order_details_Medicines">
+      <End EntitySet="Medicines" Role="Medicines" />
+      <End EntitySet="Order_details" Role="Order_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_details_Orders" Association="Self.FK_Order_details_Orders">
+      <End EntitySet="Orders" Role="Orders" />
+      <End EntitySet="Order_details" Role="Order_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
+      <End EntitySet="Users" Role="Users" />
+      <End EntitySet="Orders" Role="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

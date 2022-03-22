@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Pharmacy.Models.Database.Category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Customer.cshtml";
+}
+
+<h2 class="text-info">Medicines</h2>
+
+@foreach (var i in Model)
+{
+
+
+    <h3 class="card-header">@i.name</h3>
+
+    <div class="row">
+
+
+        @foreach (var j in (IEnumerable<Pharmacy.Models.Database.Medicine>
+            )ViewData[@i.name])
+            {
+            <div class="card col-2 m-2">
+                <div class="card-body">
+                    <h5 class="card-title">@j.name</h5>
+                    <p class="card-text">@j.generic</p>
+                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                </div>
+            </div>
+            }
+
+    </div>
+
+}
+
+
+
+
+
